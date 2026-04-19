@@ -2,6 +2,7 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 
 COPY Directory.Packages.props .
+COPY Directory.Build.props .
 COPY PremierBankTesting.sln .
 COPY src/PremierBankTesting.Domain/PremierBankTesting.Domain.csproj src/PremierBankTesting.Domain/
 COPY src/PremierBankTesting.Contracts/PremierBankTesting.Contracts.csproj src/PremierBankTesting.Contracts/
