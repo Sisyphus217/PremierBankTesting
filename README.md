@@ -23,6 +23,7 @@ PostgreSQL запустится на порту **5433**.
 ### 2. Применить миграции
 
 ```bash
+dotnet restore
 dotnet ef database update \
   --project src/PremierBankTesting.Infrastructure \
   --startup-project src/PremierBankTesting.Api
