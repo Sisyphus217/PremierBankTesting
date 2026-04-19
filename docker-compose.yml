@@ -16,32 +16,5 @@ services:
       timeout: 5s
       retries: 5
 
-  migrator:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: migrator
-    container_name: premier_bank_migrator
-    environment:
-      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=premier_bank;Username=premier;Password=premier123
-    depends_on:
-      db:
-        condition: service_healthy
-
-  api:
-    build:
-      context: .
-      dockerfile: Dockerfile
-      target: runtime
-    container_name: premier_bank_api
-    ports:
-      - "5000:8080"
-    environment:
-      - ConnectionStrings__DefaultConnection=Host=db;Port=5432;Database=premier_bank;Username=premier;Password=premier123
-      - ASPNETCORE_ENVIRONMENT=Production
-    depends_on:
-      migrator:
-        condition: service_completed_successfully
-
 volumes:
   postgres_data:
