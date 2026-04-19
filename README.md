@@ -1,47 +1,26 @@
 # PremierBank Testing
 
-## Как запустить
-
 **Требования:** .NET 8 SDK, Docker
 
-### 1. Поднять базу данных
+## Как запустить
+
+**Шаг 1.** Собрать образы и применить миграции:
 
 ```bash
-docker compose up -d
+docker compose up --build migrator
 ```
 
-PostgreSQL запустится на порту **5433**.
+Запустит PostgreSQL, дождётся его готовности, затем применит все миграции через `dotnet ef database update`.
 
-| Параметр | Значение |
-|----------|----------|
-| Host | localhost |
-| Port | 5433 |
-| Database | premier_bank |
-| Username | premier |
-| Password | premier123 |
-
-### 2. Применить миграции
+**Шаг 2.** Запустить API:
 
 ```bash
-dotnet restore
-dotnet ef database update \
-  --project src/PremierBankTesting.Infrastructure \
-  --startup-project src/PremierBankTesting.Api
+docker compose up api
 ```
 
-> Если `dotnet ef` не установлен: `dotnet tool install --global dotnet-ef`
+Swagger UI: [http://localhost:5000/swagger](http://localhost:5000/swagger)
 
-### 3. Запустить API
-
-```bash
-dotnet run --project src/PremierBankTesting.Api
-```
-
-### 4. Открыть Swagger UI
-
-[http://localhost:5000/swagger](http://localhost:5000/swagger)
-
-### 5. Запустить тесты
+## Тесты
 
 ```bash
 dotnet test
